@@ -3,7 +3,7 @@ import pandas as pd
 
 
 # Read in the csv file that I want to work with in this app
-raw_data = pd.read_csv("/Users/starman/Desktop/Little_Project_Ideas/SAM_gov_Organizer/R_d_ContractOpps/FilteredOpp.csv", encoding='utf-8')
+raw_data = pd.read_csv("streamlit_app/sam-opportunities/data/FilteredOpp.csv", encoding='utf-8')
 
 
 st.set_page_config(layout='wide')
