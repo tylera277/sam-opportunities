@@ -2,8 +2,14 @@ import streamlit as st
 import pandas as pd
 
 
+# things to be cached
+#@st.cache_resource
+
+#######
+
+
 # Read in the csv file that I want to work with in this app
-raw_data = pd.read_csv("data/FilteredOpp.csv", encoding='utf-8')
+raw_data = pd.read_csv('streamlit_app/sam-opportunities/data/ContractOpp_data/filtered_and_summarized_data/filtered_data_22mar.csv', encoding='utf-8')
 
 
 st.set_page_config(layout='wide')
@@ -64,7 +70,7 @@ for idx, row in filtered_df.iterrows():
     with cols[idx % num_columns]:
         with st.container(border=True):
             st.subheader(row['Title'])
-            st.write("AI Summary goes here??")
+            st.write("Summary:", row['ai_summary_description'])
             st.write(row['Sub-Tier'])
             st.write("Response Deadline:", row['ResponseDeadLine'])
             with st.expander("More Details"):
