@@ -5,8 +5,8 @@ from transformers import pipeline
 # File location where you want to pull the raw CSV file from
 # of all of the opportunities
 
-raw_file_location = "ContractOpp_data/raw_data/ContractOpportunitiesFullCSV_22Mar.csv"
-output_file_location = "ContractOpp_data/filtered_and_summarized_data/filtered_data_22mar.csv"
+raw_file_location = "data/ContractOpp_data/raw_data/ContractOpportunitiesFullCSV_29Mar.csv"
+output_file_location = "data/ContractOpp_data/filtered_and_summarized_data/filtered_data_29mar.csv"
 
 # Load in the raw data
 raw_data = pd.read_csv(raw_file_location, encoding='Windows-1252')
@@ -15,7 +15,7 @@ raw_data = pd.read_csv(raw_file_location, encoding='Windows-1252')
 # Filtering based on the columns I want to keep
 columns_to_keep = ['NoticeId', 'Title', 'Sol#', 'Department/Ind.Agency', 'CGAC',
        'Sub-Tier', 'FPDS Code', 'Office', 'AAC Code', 'PostedDate', 'Type',
-       'BaseType', 'ArchiveType', 'SetASideCode', 'SetASide',
+       'BaseType', 'ArchiveType', 'SetASideCode', 'SetASide','PostedDate',
        'ResponseDeadLine', 'NaicsCode', 'ClassificationCode',
        'Active', 'Link',
        'Description'];
@@ -25,7 +25,15 @@ early_filtered_data_two = early_filtered_data[~(early_filtered_data['SetASide'] 
 early_filtered_data_three = early_filtered_data_two[early_filtered_data_two['ClassificationCode'].str.startswith('A', na=False)]
 
 
-list_of_departments = early_filtered_data_three['Sub-Tier'].unique()
+# Filtering the ResponseDeadline field by the current date, so I only see the currently
+# active opportunities listed
+now = pd.Timestamp('2026-03-29T00:00:00+00:00')
+early_filtered_data_three['ResponseDeadLine_Converted'] = pd.to_datetime(early_filtered_data_three['ResponseDeadLine'],utc=True,format='mixed')
+early_filtered_data_four = early_filtered_data_three[early_filtered_data_three['ResponseDeadLine_Converted'] > now]
+
+
+
+list_of_departments = early_filtered_data_four['Sub-Tier'].unique()
 
 #####################
 # Code used previously, may need again
@@ -43,7 +51,7 @@ summarizer = load_model()
 
 
 # After dropping duplicates, clean the descriptions
-temp_data_selective = early_filtered_data_three.drop_duplicates(subset=['Title'], keep='first').copy()
+temp_data_selective = early_filtered_data_four.drop_duplicates(subset=['Title'], keep='first').copy()
 
 # Fill NaN descriptions with empty string (or drop them)
 temp_data_selective['Description'] = temp_data_selective['Description'].fillna('')
@@ -73,8 +81,8 @@ for i in range(0, len(descriptions), batch_size):
             # Only summarize longer descriptions
             summary = summarizer(
                 desc, 
-                max_length=60, 
-                min_length=20, 
+                max_length=70, 
+                min_length=30, 
                 do_sample=False,
                 truncation=True
             )

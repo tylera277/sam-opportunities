@@ -72,8 +72,8 @@ for idx, row in filtered_df.iterrows():
             st.subheader(row['Title'])
             st.write("Summary:", row['ai_summary_description'])
             st.write(row['Sub-Tier'])
+            st.write("Posted Date:", row['PostedDate'])
             st.write("Response Deadline:", row['ResponseDeadLine'])
             with st.expander("More Details"):
-                st.write('More words can go here!')
                 st.write('Solicitation Number: ', row['Sol#'])
                 st.write("Link:", row['Link'])
