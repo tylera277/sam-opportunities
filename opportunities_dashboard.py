@@ -9,7 +9,7 @@ import pandas as pd
 
 
 # Read in the csv file that I want to work with in this app
-raw_data = pd.read_csv('data/ContractOpp_data/filtered_and_summarized_data/filtered_data_22mar.csv', encoding='utf-8')
+raw_data = pd.read_csv('data/ContractOpp_data/filtered_and_summarized_data/filtered_data_29mar.csv', encoding='utf-8')
 
 
 st.set_page_config(layout='wide')
