@@ -4,9 +4,8 @@ from transformers import pipeline
 
 # File location where you want to pull the raw CSV file from
 # of all of the opportunities
-
-raw_file_location = "data/ContractOpp_data/raw_data/ContractOpportunitiesFullCSV_29Mar.csv"
-output_file_location = "data/ContractOpp_data/filtered_and_summarized_data/filtered_data_29mar.csv"
+raw_file_location = "data/ContractOpp_data/raw_data/ContractOpportunitiesFullCSV_05Apr.csv"
+output_file_location = "data/ContractOpp_data/filtered_and_summarized_data/filtered_data_05Apr.csv"
 
 # Load in the raw data
 raw_data = pd.read_csv(raw_file_location, encoding='Windows-1252')
@@ -27,7 +26,7 @@ early_filtered_data_three = early_filtered_data_two[early_filtered_data_two['Cla
 
 # Filtering the ResponseDeadline field by the current date, so I only see the currently
 # active opportunities listed
-now = pd.Timestamp('2026-03-29T00:00:00+00:00')
+now = pd.Timestamp('2026-04-05T00:00:00+00:00')
 early_filtered_data_three['ResponseDeadLine_Converted'] = pd.to_datetime(early_filtered_data_three['ResponseDeadLine'],utc=True,format='mixed')
 early_filtered_data_four = early_filtered_data_three[early_filtered_data_three['ResponseDeadLine_Converted'] > now]
 
