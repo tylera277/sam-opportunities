@@ -4,8 +4,8 @@ from transformers import pipeline
 
 # File location where you want to pull the raw CSV file from
 # of all of the opportunities
-raw_file_location = "data/ContractOpp_data/raw_data/ContractOpportunitiesFullCSV_14Apr.csv"
-output_file_location = "data/ContractOpp_data/filtered_and_summarized_data/filtered_data_14Apr.csv"
+raw_file_location = "data/ContractOpp_data/raw_data/ContractOpportunitiesFull_26Apr.csv"
+output_file_location = "data/ContractOpp_data/filtered_and_summarized_data/filtered_data_26Apr.csv"
 
 # Load in the raw data
 raw_data = pd.read_csv(raw_file_location, encoding='Windows-1252')
